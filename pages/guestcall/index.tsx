@@ -17,8 +17,8 @@ export default function Home() {
     e.preventDefault();
     
     // use room code to fetch auth token
-    let roomCode ="btb-surd-zos";
-    let userName ="Host";
+    let roomCode ="rbw-utna-mjd";
+    let userName ="Guest";
     const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
     
     try {
@@ -49,7 +49,7 @@ export default function Home() {
     <>
     <div className="App">
     <form onSubmit={handleSubmit}>
-     <button className="btn-primary">Join</button>
+     <button className="btn-primary">Guest</button>
     </form>
     {isConnected ? (
       <>

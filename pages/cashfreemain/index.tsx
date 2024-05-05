@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { cashfree } from "./util";
+import { redirect } from "next/dist/server/api-utils";
 
 
 
 export default function CashFreeMain() {
   
-    const [sessionId, setsessionId] = useState();
     const getSessionId=(e:any)=>{
         e.preventDefault();
         
@@ -21,11 +21,14 @@ export default function CashFreeMain() {
             const content = await rawResponse.json();
             // setsessionId(content.data.payment_session_id);
             console.log(content);
+            
+            
             let checkoutOptions = {
                 paymentSessionId: content.data.payment_session_id,
                 returnUrl: "https://test.cashfree.com/pgappsdemos/v3success.php?myorder="+content.data.order_id,
-                
+                // redirectTarget: "react-iframe",
             }
+            
             cashfree.checkout(checkoutOptions).then(function(result:any){
                 if(result.error){
                     alert(result.error.message)
@@ -34,7 +37,7 @@ export default function CashFreeMain() {
                     console.log("Redirection")
                 }
             });
-
+            
             
           })();
 
@@ -42,7 +45,8 @@ export default function CashFreeMain() {
     
   return (
     <div className="App">
-     <button onClick={getSessionId}>Payment</button>
+     <iframe width="100%" height="100%" name="react-iframe" title="Cashfree Iframe" className="iframe"></iframe>
+     <button type="button" onClick={getSessionId}>Payment</button>
     </div>
   );
 }
